@@ -6,6 +6,10 @@ import {
 import { CounterContext } from '../../contexts/CounterProvider/context';
 import { loadPosts } from '../../contexts/PostsProvider/actions';
 import { PostsContext } from '../../contexts/PostsProvider/context';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import { Skeleton } from '@mui/material';
 
 export const Posts = () => {
   const isMounted = useRef(true);
@@ -29,23 +33,37 @@ export const Posts = () => {
   }, [postsDispatch]);
 
   return (
-    <div>
-      <button onClick={() => incrementCounter(counterDispatch)}>
-        Counter {counterState.counter}+
-      </button>
-      <button onClick={() => decrementCounter(counterDispatch)}>
-        Counter {counterState.counter}-
-      </button>
+    <>
       <h1>POSTS</h1>
+      <Button
+        variant="contained"
+        onClick={() => incrementCounter(counterDispatch)}
+      >
+        Counter {counterState.counter}+
+      </Button>
+      <Button
+        variant="contained"
+        onClick={() => decrementCounter(counterDispatch)}
+      >
+        Counter {counterState.counter}-
+      </Button>
       {postsState.loading && (
-        <p>
-          <strong>Carregando posts...</strong>
-        </p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <Skeleton variant="rounded" width={'100%'} height={120} />
+          <Skeleton variant="rounded" width={'100%'} height={120} />
+          <Skeleton variant="rounded" width={'100%'} height={120} />
+          <Skeleton variant="rounded" width={'100%'} height={120} />
+        </div>
       )}
-
-      {postsState.posts.map((p) => (
-        <p key={p.id}>{p.title}</p>
-      ))}
-    </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        {postsState.posts.map((p) => (
+          <Card key={p.id}>
+            <CardContent>
+              <p>{p.title}</p>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </>
   );
 };

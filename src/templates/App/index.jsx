@@ -8,9 +8,7 @@ function App() {
   return (
     <CounterProvider>
       <PostsProvider>
-        <div>
-          <Posts />
-        </div>
+        <Posts />
       </PostsProvider>
     </CounterProvider>
   );
